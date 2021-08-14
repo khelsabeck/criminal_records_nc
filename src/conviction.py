@@ -2,12 +2,13 @@ from datetime import date, datetime, timedelta
 import typing
 
 class Conviction:
-    def __init__(self, crime:str, crime_class:str, conviction_date, conviction_loc:str, statute:str):
+    def __init__(self, crime:str, crime_class:str, offense_date, conviction_date, conviction_loc:str, statute:str):
         self._valid_classes = [ "Infraction", "Class 3 Misdemeanor", "Class 2 Misdemeanor", "Class 1 Misdemeanor", "Class A1 Misdemeanor", "Class I Felony",
                         "Class H Felony", "Class G Felony", "Class F Felony", "Class E Felony", "Class D Felony", "Class C Felony", "Class B1 Felony",
                         "Class B2 Felony", "Class A Felony" ]
         self.set_crime(crime)
         self.set_crime_class(crime_class)
+        self.set_offense_date(offense_date)
         self.set_conviction_date(conviction_date)
         self.set_conviction_loc(conviction_loc)
         self.set_statute(statute)
@@ -36,11 +37,25 @@ class Conviction:
         '''This ensures the validation runs before setting the _crime_class value'''
         self.set_crime_class(crime_class)
 
-    def validate_date(self, conviction_date):
-        if type(conviction_date) == date:
+    def validate_date(self, input_date):
+        if type(input_date) == date:
             return True
         else:
-            raise ValueError("The conviction_date must be a valid datetime date object.")
+            raise ValueError("The dates of conviction and offense must be a valid datetime date objects.")
+
+    def set_offense_date(self, offense_date):
+        '''This validates the offense_date is a datetime date object, or raises a ValueError with an appropriate message'''
+        if self.validate_date(offense_date):
+            self._offense_date = offense_date
+
+    @property
+    def offense_date(self):
+        return self._offense_date
+
+    @offense_date.setter
+    def offense_date(self, offense_date):
+        self.set_offense_date(offense_date)
+
 
     def set_conviction_date(self, conviction_date):
         '''This validates the conviction_date is a datetime date object, or raises a ValueError with an appropriate message'''
@@ -97,3 +112,31 @@ class Conviction:
     @statute.setter
     def statute(self, statute:str):
         self.set_statute(statute)
+
+    @property
+    def is_felony(self):
+        '''This returns true if the crime_class is a felony'''
+        eligible_felonies = {   'Class I Felony', 'Class H Felony','Class G Felony', 'Class F Felony', 'Class E Felony','Class D Felony','Class C Felony', 
+            'Class B2 Felony','Class B1 Felony', 'Class A Felony' }
+        if self.crime_class in eligible_felonies:
+            return True
+        else:
+            return False
+
+    @property
+    def is_misdemeanor(self):
+        '''This returns true if the crime_class is a misdemeanor'''
+        misdemeanors = {   'Class 3 Misdemeanor', 'Class 2 Misdemeanor','Class 1 Misdemeanor', 'Class A1 Misdemeanor',}
+        if self.crime_class in misdemeanors:
+            return True
+        else:
+            return False
+    
+    @property
+    def is_infraction(self):
+        '''This returns true if the crime_class is an infraction, else false.'''
+        if self.crime_class == "Infraction":
+            return True
+        else:
+            return False
+

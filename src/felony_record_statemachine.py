@@ -210,16 +210,23 @@ class FinishedState(State):
 class ErrorState(State):
     '''If there is an error in one of the states, ErrorState is likely called.'''
     def on_event(self, convictions:list, points:int):
+        self.level = "An error occured while caluclating the record."
+        self.points = "An error occured while caluclating the record."
         return self
 
 #--------- The State Machine:-----------------
 class Felony_RecordMachine:
-    '''Call this in client code as such:
-    from felony_record_statemachine import Felony_RecordMachine
-    sm = Felony_RecordMachine()
-    sm.on_event(convictions)'''
+    '''This program calculates a defendant's felony record with the on_event method, and determines the number of points and the level for felony sentencing.'''
     def __init__(self):
         self.state = StartState() # starting state set
     
     def on_event(self, convictions:list, points:int):
         self.state = self.state.on_event(convictions, 0)
+
+    @property
+    def points(self):
+        return self.state.points
+
+    @property
+    def level(self):
+        return self.state.level
