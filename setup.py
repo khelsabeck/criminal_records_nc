@@ -6,8 +6,8 @@ with open("README.md", "r") as fh:
 setup (
     name='criminal_records_nc',
     version='0.0.1',
-    description='This is a set of tools for calculating a North Carolina Criminal Record.',
-    py_modules=["felony_record_statemachine"],
+    description='This is a set of tools for calculating NC criminal records (intended for attorneys only).',
+    py_modules=["felony_record_statemachine", "conviction", "defendant", "dumbwaiter", "habitual_machine"],
     package_dir={'':'src'}, 
     long_description=long_description,
     long_description_content_type="text/markdown",
