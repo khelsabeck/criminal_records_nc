@@ -1,6 +1,6 @@
 from src.habitual_machine import State, StartState, StrikeOne, StrikeTwo, StrikeThree, FinishedState, HabitualMachine
 from src.dumbwaiter import Dumbwaiter
-from src.conviction import Conviction
+from src.charge import Charge
 from src.defendant import Defendant
 import pytest
 from datetime import date, datetime, timedelta
@@ -28,15 +28,15 @@ def dumbwaiter():
 @pytest.fixture
 def conviction1():
     '''This is a basic conviction for testing the i_eligible method in the fsm itself.'''
-    conviction1 = Conviction("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")
+    conviction1 = Charge("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")
     return conviction1
 
 @pytest.fixture
 def one_strike():
     '''FOR USE WITH defendant1, born 1/1/99.
     This represents a single strike for habitual status. It is not eligible for habitual status'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")                         # -- StrikeOne
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")                         # -- StrikeOne
     one_strike = [ con1, con2 ]
     return one_strike
 
@@ -44,12 +44,12 @@ def one_strike():
 def two_strikes():
     '''FOR USE WITH defendant1, born 1/1/99.
     This represents a record with 2 strikes. It is not eligible for habitual status'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")                         # -- StrikeOne
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2018,1, 1),date(2019,5, 5), "Randolph County", "14-39")    # -- StrikeTwo
-    con6 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1), date(2015,6, 6), "Randolph County", "14-72")                    # 1 pt
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")                         # -- StrikeOne
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2018,1, 1),date(2019,5, 5), "Randolph County", "14-39")    # -- StrikeTwo
+    con6 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1), date(2015,6, 6), "Randolph County", "14-72")                    # 1 pt
     two_strikes = [ con1, con2, con3, con4, con5, con6 ]
     return two_strikes
 
@@ -57,12 +57,12 @@ def two_strikes():
 def one_strike_because18():
     '''FOR USE WITH defendant1, born 1/1/99.
     This represents a record with 1 strike because the second happened with the defendant under 18. It is not eligible for habitual status'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")                         # -- StrikeOne
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2014,3, 3), "Randolph County", "14-72")                    # 
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2014,1, 1),date(2016,5, 5), "Randolph County", "14-39")    # -- Still under 18
-    con6 = Conviction("PSG", "Class 1 Misdemeanor", date(2016,1, 1),date(2016,6, 6), "Randolph County", "14-72")                    # 1 pt
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")                         # -- StrikeOne
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2014,3, 3), "Randolph County", "14-72")                    # 
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2014,1, 1),date(2016,5, 5), "Randolph County", "14-39")    # -- Still under 18
+    con6 = Charge("PSG", "Class 1 Misdemeanor", date(2016,1, 1),date(2016,6, 6), "Randolph County", "14-72")                    # 1 pt
     one_strike_because18 = [ con1, con2, con3, con4, con5, con6 ]
     return one_strike_because18    
 
@@ -71,12 +71,12 @@ def one_strike_because18():
 def screen_pedantic_exceptions():
     '''FOR USE WITH defendant1, born 1/1/99.
     This represents a record with 1 strike because the second happened with the defendant under 18. It is not eligible for habitual status'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("Habitual B&E", "Class E Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-7.31")              # -- No  Strike (pedantic)
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
-    con5 = Conviction("Habitual Misdemeanor Assault", "Class H Felony", date(2014,1, 1),date(2019,5, 5), "Randolph County", "14-33.2") # -- No Strike (pedantic)
-    con6 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,6, 6), "Randolph County", "14-72")                    # 
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("Habitual B&E", "Class E Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-7.31")              # -- No  Strike (pedantic)
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
+    con5 = Charge("Habitual Misdemeanor Assault", "Class H Felony", date(2014,1, 1),date(2019,5, 5), "Randolph County", "14-33.2") # -- No Strike (pedantic)
+    con6 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,6, 6), "Randolph County", "14-72")                    # 
     screen_pedantic_exceptions = [ con1, con2, con3, con4, con5, con6 ]
     return screen_pedantic_exceptions    
 
@@ -84,12 +84,12 @@ def screen_pedantic_exceptions():
 def three_striker():
     '''FOR USE WITH defendant1, born 1/1/99.
     This represents a record with 3 strikes. It is eligible for habitual status'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")                         # -- StrikeOne
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2017,12, 31),date(2018,1, 1), "Randolph County", "14-39")    # -- Strike2
-    con6 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2018,1, 2),date(2018,1, 3), "Randolph County", "14-39")    # -- Strike3
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("PSG", "Class H Felony", date(2014,1, 1),date(2015,2, 2), "Randolph County", "14-72")                         # -- StrikeOne
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2017,12, 31),date(2018,1, 1), "Randolph County", "14-39")    # -- Strike2
+    con6 = Charge("Second Degree Kidnapping", "Class E Felony", date(2018,1, 2),date(2018,1, 3), "Randolph County", "14-39")    # -- Strike3
     three_striker = [ con1, con2, con3, con4, con5, con6 ]
     return three_striker   
 
@@ -97,12 +97,12 @@ def three_striker():
 def one_strike_overlapper():
     '''FOR USE WITH defendant1, born 1/1/99.
     This represents a record with three overlapping-timeline felonies. Only one should count.'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("PSG", "Class H Felony", date(2014,1, 1),date(2018,1, 1), "Randolph County", "14-72")                         # -- StrikeOne
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2014,12, 31),date(2017,12, 31), "Randolph County", "14-39")    # -- Overlap Strike2
-    con6 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2018,1, 1),date(2018,1, 3), "Randolph County", "14-39")    # -- Overlap Strike3
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("PSG", "Class H Felony", date(2014,1, 1),date(2018,1, 1), "Randolph County", "14-72")                         # -- StrikeOne
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2014,12, 31),date(2017,12, 31), "Randolph County", "14-39")    # -- Overlap Strike2
+    con6 = Charge("Second Degree Kidnapping", "Class E Felony", date(2018,1, 1),date(2018,1, 3), "Randolph County", "14-39")    # -- Overlap Strike3
     one_strike_overlapper = [ con1, con2, con3, con4, con5, con6 ]
     return one_strike_overlapper   
 
@@ -110,12 +110,12 @@ def one_strike_overlapper():
 def two_strike_overlapper():
     '''FOR USE WITH defendant1, born 1/1/99.
     This represents a record with two non-overlapping-timeline felonies. Two should count out of three.'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("PSG", "Class H Felony", date(2014,1, 1),date(2016,1, 1), "Randolph County", "14-72")                         # -- StrikeOne
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2016,1, 1),date(2017,12, 31), "Randolph County", "14-39")    # -- Overlap Strike2
-    con6 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2018,1, 1),date(2018,1, 3), "Randolph County", "14-39")    # -- Overlap Strike3
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("PSG", "Class H Felony", date(2014,1, 1),date(2016,1, 1), "Randolph County", "14-72")                         # -- StrikeOne
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2016,1, 1),date(2017,12, 31), "Randolph County", "14-39")    # -- Overlap Strike2
+    con6 = Charge("Second Degree Kidnapping", "Class E Felony", date(2018,1, 1),date(2018,1, 3), "Randolph County", "14-39")    # -- Overlap Strike3
     two_strike_overlapper = [ con1, con2, con3, con4, con5, con6 ]
     return two_strike_overlapper   
 
@@ -123,13 +123,13 @@ def two_strike_overlapper():
 def two_strike_overlapper2():
     '''FOR USE WITH defendant1, born 1/1/99.
     This represents a record with two non-overlapping-timeline felonies. Two should count out of three.'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("PSG", "Class H Felony", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                         # -- StrikeOne
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2016,1, 1),date(2017,12, 31), "Randolph County", "14-39")    # -- Strike2
-    con6 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2017,12, 31),date(2018,1, 3), "Randolph County", "14-39")    # -- Overlaps Strike2
-    con7 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2017,12, 31),date(2018,1, 3), "Randolph County", "14-39")    # -- Overlaps Strike2
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("PSG", "Class H Felony", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                         # -- StrikeOne
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,3, 3), "Randolph County", "14-72")                    # 
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,4, 4), "Randolph County", "14-72")                    # 
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2016,1, 1),date(2017,12, 31), "Randolph County", "14-39")    # -- Strike2
+    con6 = Charge("Second Degree Kidnapping", "Class E Felony", date(2017,12, 31),date(2018,1, 3), "Randolph County", "14-39")    # -- Overlaps Strike2
+    con7 = Charge("Second Degree Kidnapping", "Class E Felony", date(2017,12, 31),date(2018,1, 3), "Randolph County", "14-39")    # -- Overlaps Strike2
 
     two_strike_overlapper2 = [ con1, con2, con3, con4, con5, con6, con7 ]
     return two_strike_overlapper2   

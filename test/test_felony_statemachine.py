@@ -1,6 +1,6 @@
 from src.felony_record_statemachine import EligibleCrimes, State, StartState, ScreeningState, RescreeningState, ZippingState, ZippedState, HubState, \
     MisdemeanorState, FelonyStartState, FelonyOverHState, FelonyOverEState, FelonyOverB2State, FinishedState, ErrorState, Felony_RecordMachine
-from src.conviction import Conviction
+from src.charge import Charge
 from src.defendant import Defendant
 import pytest
 from datetime import date, datetime, timedelta
@@ -16,144 +16,144 @@ def eligibles():
 @pytest.fixture
 def level1_convictions_onepoint():
     '''This represents a low-level criminal with 1 point for felonies (expected value is Level 1).'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")
     level1_convictions_onepoint = [ con1 ]
     return level1_convictions_onepoint
 
 @pytest.fixture
 def level1_convictions_nopoints():
     '''This represents a low-level criminal with 0 points for felonies (expected value is Level 1).'''
-    con1 = Conviction("Shoplifting", "Class 3 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")
+    con1 = Charge("Shoplifting", "Class 3 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")
     level1_convictions_nopoints = [ con1 ]
     return level1_convictions_nopoints
 
 @pytest.fixture
 def level2_convictions_2points():
     '''This represents a Level 2 record with 2 single class 1 misdemeanors for 2 points'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")
-    con2 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")
+    con2 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")
     level2_convictions_2points = [ con1, con2 ]
     return level2_convictions_2points
 
 @pytest.fixture
 def level2_convictions_fivepoints():
     '''This represents a level 2 record with exactly 5 points from a mix of felonies and misdemeanors'''
-    con1 = Conviction("Assault on Female", "Class A1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-33")
-    con2 = Conviction("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")
-    con3 = Conviction("PSG", "Class H Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")
+    con1 = Charge("Assault on Female", "Class A1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-33")
+    con2 = Charge("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")
+    con3 = Charge("PSG", "Class H Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")
     level2_convictions_fivepoints = [ con1, con2, con3 ]
     return level2_convictions_fivepoints
 
 @pytest.fixture
 def level3_convictions_sixpoints():
     '''This represents a level 3 record with exactly 6 points from a mix of felonies and misdemeanors'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")
-    con2 = Conviction("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")
-    con3 = Conviction("PSG", "Class H Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")
+    con2 = Charge("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")
+    con3 = Charge("PSG", "Class H Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")
     level3_convictions_sixpoints = [ con1, con2, con3, con4 ]
     return level3_convictions_sixpoints
 
 @pytest.fixture
 def level3_convictions_ninepoints():
     '''This represents a level 3 record with exactly 9 points from a mix of felonies and misdemeanors'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
-    con2 = Conviction("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")                         # 2 pts
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")                    # 1 pt
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
-    con5 = Conviction("Telecom Hacking", "Class G Felony", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-113.5")          # 4 pts
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
+    con2 = Charge("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")                         # 2 pts
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")                    # 1 pt
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
+    con5 = Charge("Telecom Hacking", "Class G Felony", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-113.5")          # 4 pts
     level3_convictions_ninepoints = [ con1, con2, con3, con4, con5 ]
     return level3_convictions_ninepoints
 
 @pytest.fixture
 def level4_convictions_tenpoints():
     '''This represents a level 4 record with exactly 10 points from a mix of felonies and misdemeanors'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
-    con2 = Conviction("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")                         # 2 pts
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")                    # 1 pt
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-39")    # 4 pts
-    con6 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-72")                    # 1 pt
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
+    con2 = Charge("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")                         # 2 pts
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")                    # 1 pt
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-39")    # 4 pts
+    con6 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-72")                    # 1 pt
     level4_convictions_tenpoints = [ con1, con2, con3, con4, con5, con6 ]
     return level4_convictions_tenpoints
 
 @pytest.fixture
 def level4_convictions_13points():
     '''This represents a level 4 record with exactly 13 points from a mix of felonies and misdemeanors'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
-    con2 = Conviction("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")                         # 2 pts
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")                    # 1 pt
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-39")    # 4 pts
-    con6 = Conviction("Involuntary Manslaughter", "Class F Felony", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-18")    # 4 pts
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
+    con2 = Charge("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")                         # 2 pts
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")                    # 1 pt
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-39")    # 4 pts
+    con6 = Charge("Involuntary Manslaughter", "Class F Felony", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-18")    # 4 pts
     level4_convictions_13points = [ con1, con2, con3, con4, con5, con6 ]
     return level4_convictions_13points
 
 @pytest.fixture
 def level5_convictions_14points():
     '''This represents a level 5 record with exactly 14 points from a mix of felonies and misdemeanors'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
-    con2 = Conviction("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")                         # 2 pts
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3,3), "Randolph County", "14-72")                    # 1 pt
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-39")    # 4 pts
-    con6 = Conviction("Involuntary Manslaughter", "Class F Felony", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-18")    # 4 pts
-    con7 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,7, 7), "Randolph County", "14-72")                    # 1 pt
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
+    con2 = Charge("PSG", "Class H Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-72")                         # 2 pts
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3,3), "Randolph County", "14-72")                    # 1 pt
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-39")    # 4 pts
+    con6 = Charge("Involuntary Manslaughter", "Class F Felony", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-18")    # 4 pts
+    con7 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,7, 7), "Randolph County", "14-72")                    # 1 pt
     level5_convictions_14points = [ con1, con2, con3, con4, con5, con6, con7 ]
     return level5_convictions_14points
 
 @pytest.fixture
 def level5_convictions_17points():
     '''This represents a level 5 record with exactly 17 points from a mix of felonies and misdemeanors'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
-    con2 = Conviction("Robbery with Dang Weap", "Class D Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-87")      # 6 pt
-    con3 = Conviction("Murder in the 2nd", "Class B1 Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(b)")       # 9 pt
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
+    con2 = Charge("Robbery with Dang Weap", "Class D Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-87")      # 6 pt
+    con3 = Charge("Murder in the 2nd", "Class B1 Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(b)")       # 9 pt
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
     level5_convictions_17points = [ con1, con2, con3, con4 ]
     return level5_convictions_17points
 
 @pytest.fixture
 def level5_convictions_17_wb2andC():
     '''This represents a level 5 record with exactly 17 points including a b2 and a c felony'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
-    con2 = Conviction("Assault w Deadly WIKISI", "Class C Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-32(a)")  # 6 pt
-    con3 = Conviction("Murder in the 2nd", "Class B2 Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(c)")       # 6 pt
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
-    con5 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-72")                    # 1 pt
-    con6 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-72")                    # 1 pt
-    con7 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,7, 7), "Randolph County", "14-72")                    # 1 pt
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
+    con2 = Charge("Assault w Deadly WIKISI", "Class C Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-32(a)")  # 6 pt
+    con3 = Charge("Murder in the 2nd", "Class B2 Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(c)")       # 6 pt
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
+    con5 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-72")                    # 1 pt
+    con6 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-72")                    # 1 pt
+    con7 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,7, 7), "Randolph County", "14-72")                    # 1 pt
     level5_convictions_17_wb2andC = [ con1, con2, con3, con4, con5, con6, con7 ]
     return level5_convictions_17_wb2andC
 
 @pytest.fixture
 def level5_convictions_17_redundant_dates():
     '''This represents a level 5 record w  17 points. There are redundant convictions based on the dates/levels.'''
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
-    con2 = Conviction("Assault w Deadly WIKISI", "Class C Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-32(a)")  # 6 pt
-    con3 = Conviction("Murder in the 2nd", "Class B2 Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(c)")       # 6 pt
-    con4 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
-    con5 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 0 pt (same as other date)
-    con6 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")                    # 0 pt (same as other date)
-    con7 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-72")                    # 1 pt
-    con8 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-72")                    # 1 pt
-    con9 = Conviction("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,7, 7), "Randolph County", "14-72")                    # 1 pt
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")                    # 1 pt
+    con2 = Charge("Assault w Deadly WIKISI", "Class C Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-32(a)")  # 6 pt
+    con3 = Charge("Murder in the 2nd", "Class B2 Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(c)")       # 6 pt
+    con4 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 1 pt
+    con5 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "14-72")                    # 0 pt (same as other date)
+    con6 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-72")                    # 0 pt (same as other date)
+    con7 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,5, 5), "Randolph County", "14-72")                    # 1 pt
+    con8 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,6, 6), "Randolph County", "14-72")                    # 1 pt
+    con9 = Charge("PSG", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,7, 7), "Randolph County", "14-72")                    # 1 pt
     level5_convictions_17_redundant_dates = [ con1, con2, con3, con4, con5, con6, con7, con8, con9 ]
     return level5_convictions_17_redundant_dates
 
 @pytest.fixture
 def level6_convictions_18points():
     '''This represents a level 6 record with exactly 18 points from a mix of felonies and misdemeanors'''
-    con1 = Conviction("Possess Meth", "Class I Felony", date(2009,1, 1), date(2015,1, 1), "Randolph County", "90-95(d)(2)")          # 2 pts
-    con2 = Conviction("Robbery with Dang Weap", "Class D Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-87")      # 6 pt
-    con3 = Conviction("Murder First Deg", "Class A Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(a)")         # 10 pt
+    con1 = Charge("Possess Meth", "Class I Felony", date(2009,1, 1), date(2015,1, 1), "Randolph County", "90-95(d)(2)")          # 2 pts
+    con2 = Charge("Robbery with Dang Weap", "Class D Felony", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-87")      # 6 pt
+    con3 = Charge("Murder First Deg", "Class A Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(a)")         # 10 pt
     level6_convictions_18points = [ con1, con2, con3 ]
     return level6_convictions_18points
 
 @pytest.fixture
 def screening():
     '''This represents a level 1 record with ineligible misdemeanors (level 3, 2, and infraction don't count'''
-    con1 = Conviction("Shoplifting", "Class 3 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")            # 0 pts
-    con2 = Conviction("Simple Assault", "Class 2 Misdemeanor", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-33")         # 0 pt
+    con1 = Charge("Shoplifting", "Class 3 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "14-72")            # 0 pts
+    con2 = Charge("Simple Assault", "Class 2 Misdemeanor", date(2009,1, 1), date(2015,2, 2), "Randolph County", "14-33")         # 0 pt
     screening = [ con1, con2 ]
     return screening
 
@@ -161,17 +161,17 @@ def screening():
 def rescreening():
     '''This represents specific class 1 misdemeanors that do not count from chapter 20 of the statutes. Only these 3 count:
     20-141.4(a2), 20-138.1, and 20-138.2.'''
-    con1 = Conviction("misdemeanor death by vehicle", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "20-141.4(a2)")        # 1 pts
-    con2 = Conviction("Iimpaired driving", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,2, 2), "Randolph County", "20-138.1")                       # 1 pt
-    con3 = Conviction("Commercial impaired driving", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "20-138.2")             # 1 pt
-    con4 = Conviction("DWLR/I", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "20-28(a1")                                  # 0 pts
+    con1 = Charge("misdemeanor death by vehicle", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,1, 1), "Randolph County", "20-141.4(a2)")        # 1 pts
+    con2 = Charge("Iimpaired driving", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,2, 2), "Randolph County", "20-138.1")                       # 1 pt
+    con3 = Charge("Commercial impaired driving", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,3, 3), "Randolph County", "20-138.2")             # 1 pt
+    con4 = Charge("DWLR/I", "Class 1 Misdemeanor", date(2009,1, 1), date(2015,4, 4), "Randolph County", "20-28(a1")                                  # 0 pts
     rescreening = [ con1, con2, con3, con4 ]
     return rescreening
 
 @pytest.fixture
 def one_time_murderer():
     '''This represents a one-time murderer.'''
-    con1 = Conviction("Murder First Deg", "Class A Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(a)")         # 10 pt
+    con1 = Charge("Murder First Deg", "Class A Felony", date(2009,1, 1), date(2015,3, 3), "Randolph County", "14-17(a)")         # 10 pt
     one_time_murderer = [ con1 ]
     return one_time_murderer
 
@@ -410,7 +410,7 @@ def test_statemachine():
     recordmachine = Felony_RecordMachine()
     assert Felony_RecordMachine == type(recordmachine)
     assert StartState == type(recordmachine.state)
-    recordmachine.on_event([], 0)
+    recordmachine.on_event([])
     assert 0 == recordmachine.state.points
     assert 1 == recordmachine.state.level
     assert 0 == recordmachine.points

@@ -1,5 +1,5 @@
 from src.dumbwaiter import Dumbwaiter
-from src.conviction import Conviction
+from src.charge import Charge
 from src.defendant import Defendant
 import pytest
 from datetime import date, datetime, timedelta

@@ -1,5 +1,5 @@
 from src.misdemeanor_recordmachine import State, StartState, ScreeningState, ZippingState, FinishedState, MisdemeanorRecordMachine
-from src.conviction import Conviction
+from src.charge import Charge
 from src.defendant import Defendant
 import pytest
 from datetime import date, datetime, timedelta
@@ -11,46 +11,45 @@ def level1_record():
     level1_record = [  ]
     return level1_record   
 
-
 @pytest.fixture
 def level1_justinfractions():
     '''This represents a level 1 record with only infractions as convictions.'''
-    con1 = Conviction("Speeding", "Infraction", date(2011,1, 1),date(2012,1, 1), "Randolph County", "20-141")   
+    con1 = Charge("Speeding", "Infraction", date(2011,1, 1),date(2012,1, 1), "Randolph County", "20-141")   
     level1_justinfractions = [ con1 ]
     return level1_justinfractions   
 
 @pytest.fixture
 def level2_onepoint():
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("Speeding", "Infraction", date(2011,1, 1),date(2012,1, 1), "Randolph County", "20-141")   
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("Speeding", "Infraction", date(2011,1, 1),date(2012,1, 1), "Randolph County", "20-141")   
     level2_onepoint = [ con1, con2 ]
     return level2_onepoint
 
 @pytest.fixture
 def level2_onepoint_samedate():
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
-    con2 = Conviction("Larceny", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")   
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # 
+    con2 = Charge("Larceny", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")   
     level2_onepoint_samedate = [ con1, con2 ]
     return level2_onepoint_samedate
 
 @pytest.fixture
 def level2_fourpoint():
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # +1
-    con2 = Conviction("Speeding", "Infraction", date(2011,1, 1),date(2012,1, 1), "Randolph County", "20-141")   
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2016,1, 1),date(2017,1, 1), "Randolph County", "14-72")                    # +1
-    con4 = Conviction("Larceny", "Class H Felony", date(2016,1, 1),date(2017,1, 2), "Randolph County", "14-72")                     # +1
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2016,1, 1),date(2016,1, 3), "Randolph County", "14-39")    # +1
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # +1
+    con2 = Charge("Speeding", "Infraction", date(2011,1, 1),date(2012,1, 1), "Randolph County", "20-141")   
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2016,1, 1),date(2017,1, 1), "Randolph County", "14-72")                    # +1
+    con4 = Charge("Larceny", "Class H Felony", date(2016,1, 1),date(2017,1, 2), "Randolph County", "14-72")                     # +1
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2016,1, 1),date(2016,1, 3), "Randolph County", "14-39")    # +1
     level2_fourpoint = [ con1, con2, con3, con4, con5 ]
     return level2_fourpoint
 
 @pytest.fixture
 def level3_fivepoint():
-    con1 = Conviction("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # +1
-    con2 = Conviction("Speeding", "Infraction", date(2011,1, 1),date(2012,1, 1), "Randolph County", "20-141")   
-    con3 = Conviction("PSG", "Class 1 Misdemeanor", date(2016,1, 1),date(2017,1, 1), "Randolph County", "14-72")                    # +1
-    con4 = Conviction("Larceny", "Class H Felony", date(2016,1, 1),date(2017,1, 2), "Randolph County", "14-72")                     # +1
-    con5 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2016,1, 1),date(2016,1, 3), "Randolph County", "14-39")    # +1
-    con6 = Conviction("Second Degree Kidnapping", "Class E Felony", date(2016,1, 2),date(2016,1, 4), "Randolph County", "14-39")    # +1
+    con1 = Charge("PSG", "Class 1 Misdemeanor", date(2014,1, 1),date(2015,1, 1), "Randolph County", "14-72")                    # +1
+    con2 = Charge("Speeding", "Infraction", date(2011,1, 1),date(2012,1, 1), "Randolph County", "20-141")   
+    con3 = Charge("PSG", "Class 1 Misdemeanor", date(2016,1, 1),date(2017,1, 1), "Randolph County", "14-72")                    # +1
+    con4 = Charge("Larceny", "Class H Felony", date(2016,1, 1),date(2017,1, 2), "Randolph County", "14-72")                     # +1
+    con5 = Charge("Second Degree Kidnapping", "Class E Felony", date(2016,1, 1),date(2016,1, 3), "Randolph County", "14-39")    # +1
+    con6 = Charge("Second Degree Kidnapping", "Class E Felony", date(2016,1, 2),date(2016,1, 4), "Randolph County", "14-39")    # +1
     level2_fourpoint = [ con1, con2, con3, con4, con5, con6 ]
     return level2_fourpoint
 
